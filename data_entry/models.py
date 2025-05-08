@@ -26,3 +26,4 @@ class Content (models.Model):
     date_created = models.DateField(auto_now=True)
     artikel = models.TextField(verbose_name='Artikel')
     set_view = models.BooleanField(default=False, verbose_name='Set View')
+    file = models.FileField(upload_to='file/', null=True, blank=True)

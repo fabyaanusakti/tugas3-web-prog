@@ -45,6 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     <tr><th scope="row">State</th><td>${data.state || 'N/A'}</td></tr>
                     <tr><th scope="row">Zip Code</th><td>${data.zip_code || 'N/A'}</td></tr>
                     <tr><th scope="row">Tanggal Join</th><td>${joinDate}</td></tr>
+                    <tr><th scope="row">Foto</th>
+                        <td>
+                            ${data.foto ? `<img src="${data.foto}" class="img-thumbnail" style="max-height: 40px;">` : 'No image'}
+                        </td>
+                     </tr>
                 </tbody>
             </table>
         `;

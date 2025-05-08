@@ -52,17 +52,18 @@ def view_pengguna(request, id):
     
 def update_pengguna(request, id):
     pengguna = get_object_or_404(Pengguna, id=id)
+    form = PenggunaForm(instance=pengguna)
+    
     if request.method == 'POST':
-        form = PenggunaForm(request.POST, instance=pengguna)
-        context = {
-            form: 'form'
-        }
+        form = PenggunaForm(request.POST, request.FILES, instance=pengguna)
         if form.is_valid():
             form.save()
-            return redirect('data_entry:set_pengguna', context)
-    else:
-        form = PenggunaForm(instance=pengguna)
-    return render(request, 'data_entry/pengguna_update.html', {'form': form})
+            return redirect('data_entry:set_pengguna')
+    context = {
+        'form': form,
+        'pengguna': pengguna
+    }
+    return render(request, 'data_entry/pengguna_update.html', context)
 
 def delete_pengguna(request, id):
     pengguna = get_object_or_404(Pengguna, id=id)
@@ -81,43 +82,50 @@ def get_pengguna_detail_api(request, user_id):
             'city': pengguna.city,
             'state': pengguna.state,
             'zip_code': pengguna.zip_code,
-            'tanggal_join': pengguna.tanggal_join.strftime('%Y-%m-%d')
+            'tanggal_join': pengguna.tanggal_join.strftime('%Y-%m-%d'),
+            'foto': pengguna.foto.url if pengguna.foto else None
         }
         return JsonResponse(data)
     except Pengguna.DoesNotExist:
         return JsonResponse({'error': 'User not found'},status=404)
     
 def set_content(request):
-    form = ContentForm()
     context = {}
     email = request.session.get('email')
     pengguna = None
     isi_tabel = None
 
-    if request.method == 'POST' and 'selected_author' in request.POST:
-        selected_email = request.POST.get('selected_author')
-        request.session['email'] = selected_email
-        return redirect('data_entry:set_content')
+    if request.method == 'POST':
+        if 'selected_author' in request.POST:
+            # Handle author selection
+            selected_email = request.POST.get('selected_author')
+            request.session['email'] = selected_email
+            return redirect('data_entry:set_content')
+        else:
+            # Handle content creation
+            email = request.session.get('email')
+            if email:
+                try:
+                    pengguna = Pengguna.objects.get(email=email)
+                    form = ContentForm(request.POST, request.FILES)
+                    if form.is_valid():
+                        content = form.save(commit=False)
+                        content.author = pengguna
+                        content.save()
+                        return redirect('data_entry:set_content')
+                except Pengguna.DoesNotExist:
+                    pass
 
+    # For GET requests or invalid forms
     email = request.session.get('email')
     if email:
         try:
             pengguna = Pengguna.objects.get(email=email)
             isi_tabel = Content.objects.filter(author=pengguna)
-
-            if request.method == 'POST':
-                form = ContentForm(request.POST)
-                if form.is_valid():
-                    content = form.save(commit=False)
-                    content.author = pengguna
-                    content.save()
-                    return redirect('data_entry:set_content')
-            else:
-                form = ContentForm(initial={'author': pengguna})
-
         except Pengguna.DoesNotExist:
             pass
 
+    form = ContentForm()
     context = {
         'form': form,
         'email': email,
