@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="alert alert-danger">
+    <h4>Yakin ingin menghapus pengguna ini?</h4>
+    <p>Email: <strong>{{ pengguna.email }}</strong></p>
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+      <a href="{% url 'data_entry:set_pengguna' %}" class="btn btn-secondary">Batal</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

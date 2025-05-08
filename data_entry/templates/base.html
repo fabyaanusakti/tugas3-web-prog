@@ -7,6 +7,27 @@
 </head>
 <body>
   <div class="container">
+    <ul class="nav nav-tabs">
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarbdDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Master</a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="">Set Peran</a></li>
+          <li><a class="dropdown-item" href="">Penugasan</a></li>
+          <li><a class="dropdown-item" href="">Review</a></li>
+        </ul>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'data_entry:set_pengguna' %}">Pengguna</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'data_entry:set_content' %}">Konten</a>
+      </li>
+    
+    </ul>
+    
     {% block content %}
     {% endblock %}
   </div>

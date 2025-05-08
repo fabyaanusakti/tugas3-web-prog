@@ -85,6 +85,11 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+        #"ENIGNE": "django.db.backends.postgresql",
+        #"NAME": "auditdb_1",
+        #"USER": "postgres",
+        #"PASSWORD": "r00t",
+        #"HOST": "localhost"
     }
 }
 

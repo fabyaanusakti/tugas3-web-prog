@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+  <h2 class="mt-4">Edit Data Pengguna</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+    <a href="{% url 'data_entry:set_pengguna' %}" class="btn btn-secondary">Batal</a>
+  </form>
+</div>
+{% endblock %}

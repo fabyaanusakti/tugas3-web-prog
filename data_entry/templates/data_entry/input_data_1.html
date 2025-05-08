@@ -19,6 +19,7 @@
         <th scope="col">Alamat 1</th>
         <th scope="col">Kota</th>
         <th scope="col">Provinsi</th>
+        <th scope="col">Foto</th>
         <th scope="col">Aksi</th>
       </tr>
     </thead>
@@ -29,9 +30,11 @@
         <td><label>{{ pengguna.address_1 }}</label></td>
         <td><label>{{ pengguna.city }}</label></td>
         <td><label>{{ pengguna.state }}</label></td>
+        <td><label>{{ pengguna.foto }}</label></td>
         <td>
-          <a href="{% url 'data_entry:view_pengguna' pengguna.id %}" class="btn btn-outline-success">View</a>
-          <a href="#" class="btn btn-outline-primary">Edit</a>
+          <a href="{% url 'data_entry:viewdata' pengguna.id %}" class="btn btn-outline-success">View</a>
+          <a href="{% url 'data_entry:updatedata' pengguna.id %}" class="btn btn-outline-primary">Edit</a>
+          <a href="{% url 'data_entry:deletedata' pengguna.id %}" class="btn btn-outline-danger">Delete</a>
         </td>
       </tr>
       {% empty %}
