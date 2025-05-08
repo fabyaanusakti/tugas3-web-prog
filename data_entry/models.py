@@ -13,7 +13,7 @@ class Pengguna (models.Model):
     state= models.TextField()
     zip_code= models.CharField(max_length = 7)
     tanggal_join = models.DateField(auto_now = True)
-    foto = models.ImageField(upload_to='media/', null=True, blank=True)
+    foto = models.ImageField(upload_to='foto/', null=True, blank=True)
 
     class Meta:
         verbose_name = 'pengguna'

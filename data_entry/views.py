@@ -21,7 +21,7 @@ def set_pengguna(request):
     email_p = None
 
     if request.method == "POST":
-        form = PenggunaForm(request.POST)
+        form = PenggunaForm(request.POST, request.FILES)
         if form.is_valid():
             email = form.cleaned_data['email']
             request.session['email'] = email
